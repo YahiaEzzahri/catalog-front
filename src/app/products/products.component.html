@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+ <div class="container mt-3">
+
+        <ng-template  #errors>
+                <div class="text-danger">
+                    {{errormessage}}
+                </div>
+    </ng-template>
+    
+    <div class="card" *ngIf="products;else errors">
+                    <div class="card-header">
+                        LISTE DES PRODUITS
+                    </div>
+            <div class="card-body">
+              
+                        <form [formGroup]="searchFormGroup" (ngSubmit)="handlSearchProducts()">
+                             <div class="input-group">
+                                <label class="input-group-text">
+                                    Keyword:
+                                </label>
+                                <input  type="text" class="form-control" formControlName="Keyword">
+                                <button class="btn btn-info">
+                                    <i class="bi bi-search">
+
+                                    </i>
+                                </button>
+                             </div>
+                        </form>
+                            <table class="table">
+                                
+                                        <thead>
+
+                                                <tr>
+                                                    <th>Id:</th>
+                                                    <th>Nom:</th>
+                                                    <th>Price:</th>
+                                                    <th>Promotion:</th>
+                                                </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let p of products">
+                                                    <td>{{p.id}}</td>
+                                                    <td>{{p.name}}</td>
+                                                    <td>{{p.price}}</td> 
+                                                    <td>
+                                                        <i *ngIf="p.promotion==true" class="bi bi-bookmark-check text-success"></i>
+                                                      <!--<i *ngIf="p.promotion==true" class="bi bi-heart-fill text-success"></i> -->  
+                                                    </td>
+
+                                                    <td *ngIf="authService.hasRole('ADMIN')">
+                                                        <button (click)="handlSetPromotion(p)" [ngClass]="p.promotion==true?'btn btn-success':'btn btn-danger'">
+                                                            <span *ngIf="p.promotion==true">Promo off</span>    
+                                                            <span *ngIf="p.promotion==false">Promo on</span>    
+                                                        </button>   
+                                                    </td>
+
+                                                    <td *ngIf="authService.hasRole('ADMIN')">
+                                                        <button (click)="handleDeleteProduct(p)" class="btn btn-danger" >
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </td>
+                                            </tr>
+                                        </tbody>
+                            </table>
+                            
+                            <ul class="nav nav-pills">
+                                <li *ngFor="let item of [].constructor(this.totalPages); let i = index">
+
+                                    <a (click)="gotoPage(i)" [ngClass]="i==currentPage?' btn-info':' btn-outline-info'" class="btn ms-1 mt-1">{{i}}</a>
+
+                                </li>
+                            </ul>
+            </div>
+    
+    </div>
+
+</div>
+</body>
+</html>

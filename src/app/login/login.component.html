@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="login.component.css">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="container mt-3">
+        <div class="col-md-6 offset-md-3">
+            <div class="card">
+                <div class="card-header">Authentification</div>
+                <div class="text-danger" *ngIf="errorMessage">
+                    {{errorMessage}}
+                </div>
+                <div class="card-body">
+                   
+                    <form [formGroup]="userFormGroup" (ngSubmit)="handleLogin()">
+                    
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Username:
+                        </label>
+                        <input type="text" formControlName="username" class="form-control">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">
+                            Password:
+                        </label>
+                        <input type="password" formControlName="password" class="form-control">
+                    </div>
+                    <button class="btn btn-primary offset-md-5" type="submit">Login</button>
+                 </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
